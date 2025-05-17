@@ -13,6 +13,7 @@ from models import Expenses
 from database import engine, SessionLocal
 from typing import Annotated
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 
 # LangChain imports
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -143,6 +144,15 @@ app = FastAPI(
     title="Combined Expense Tracker API",
     description="API for receipt processing and expense tracking",
     version="1.0.0",
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8080"],  # Explicitly allow your frontend origin
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # Specify allowed methods
+    allow_headers=["*"],
 )
 
 
